@@ -3,3 +3,5 @@ src/main/webapp/VAADIN/gwt-unitCache
 src/main/webapp/VAADIN/widgetsets
 target
 periodic.iml
+rebel.xml
+GWT development mode for periodic.launch
