@@ -59,7 +59,7 @@ public class PeriodicConnector extends AbstractHasComponentsConnector implements
 
     @OnStateChange("animate")
     void setAnimation() {
-        getWidget().animate(getState().animate);
+        if (getState().animate != -1) getWidget().animate(getState().animate);
     }
 
     @Override

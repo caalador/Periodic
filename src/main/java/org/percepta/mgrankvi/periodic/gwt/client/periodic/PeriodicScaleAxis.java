@@ -53,13 +53,13 @@ public class PeriodicScaleAxis {
         setPerStep();
     }
 
-    public void setSize(Context2d context){
+    public void setSize(Context2d context) {
         TextMetrics textInfo = context.measureText(Integer.toString(scale));
         verticalScaleWidth = textInfo.getWidth() + 10;
     }
 
     public void paint(Context2d context) {
-        if(animating){
+        if (animating) {
             return;
         }
         context.save();
@@ -76,7 +76,9 @@ public class PeriodicScaleAxis {
         context.moveTo(verticalScaleWidth, 0);
         context.closePath();
         context.stroke();
+        context.restore();
 
+        context.save();
         if (animate) {
             animate(context);
         } else {

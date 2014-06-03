@@ -9,7 +9,7 @@ public class PeriodicState extends AbstractComponentState {
     public int widthPx = 400;
     public int heightPx = 300;
 
-    public int animate;
+    public int animate = -1;
 
     public int scale = 31;
 

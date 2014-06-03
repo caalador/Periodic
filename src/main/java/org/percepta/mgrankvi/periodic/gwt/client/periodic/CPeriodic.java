@@ -30,7 +30,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     private int height = 300;
 
     private int scale = 31;
-    private boolean animate = true;
+    private boolean animate = false;
     private int animationTime = 3000;
 
     private boolean immediate = false;
@@ -55,15 +55,17 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
 
         setStyleName(CLASSNAME);
 
-        addDomHandler(this, MouseDownEvent.getType());
-        addDomHandler(this, MouseMoveEvent.getType());
-        addDomHandler(this, MouseUpEvent.getType());
-
         canvas = Canvas.createIfSupported();
         tooltipCanvas = Canvas.createIfSupported();
         if (canvas != null) {
             panel = new AbsolutePanel();
             panel.add(canvas, 0, 0);
+
+            panel.addDomHandler(this, MouseDownEvent.getType());
+            panel.addDomHandler(this, MouseMoveEvent.getType());
+            panel.addDomHandler(this, MouseUpEvent.getType());
+            panel.addDomHandler(this, MouseOutEvent.getType());
+
             panel.add(tooltipCanvas, 0, 0);
             content.add(panel);
 
@@ -116,13 +118,13 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     }
 
     protected void animate(int time) {
-        this.animate = true;
+        animate = true;
         animationTime = time;
         for (PeriodicPaintable item : paintable) {
             item.animate(time);
         }
         scaleAxis.animate(time);
-        this.animate = false;
+        animate = false;
     }
 
     protected void paint() {
