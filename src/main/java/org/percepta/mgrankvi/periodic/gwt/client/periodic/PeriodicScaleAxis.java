@@ -14,6 +14,7 @@ public class PeriodicScaleAxis {
 
     private boolean animate = false;
     private int animationTime = 3000;
+    private boolean animating = false;
 
     protected double verticalScaleWidth;
 
@@ -58,6 +59,9 @@ public class PeriodicScaleAxis {
     }
 
     public void paint(Context2d context) {
+        if(animating){
+            return;
+        }
         context.save();
         context.setFont("bold 11px Courier New");
 
@@ -112,9 +116,11 @@ public class PeriodicScaleAxis {
             protected void onComplete() {
                 super.onComplete();
                 animate = false;
+                animating = false;
             }
         };
         animator.run(animationTime);
+        animating = true;
     }
 
     public void animate(int time) {
