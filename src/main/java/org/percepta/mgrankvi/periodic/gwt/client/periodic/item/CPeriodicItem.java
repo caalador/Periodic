@@ -5,6 +5,7 @@ import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.Widget;
+import com.vaadin.client.VConsole;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicMovable;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicPaintable;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicalItem;
@@ -79,15 +80,18 @@ public class CPeriodicItem extends Widget implements PeriodicPaintable, Periodic
         if (animate) {
             animate(context);
         } else {
-            context.save();
+          /*  context.save();
             context.setStrokeStyle(CssColor.make("GRAY"));
             context.beginPath();
             context.strokeRect(position - 1, 0, 2, stepSize * data.length);
             context.closePath();
-            context.restore();
+            context.restore();*/
 
             // Paint selected spots.
             for (int i = 0; i < data.length; i++) {
+                context.save();
+                context.setStrokeStyle(CssColor.make("GRAY"));
+
                 double yPosition = stepSize * i;
                 positions[i] = yPosition;
                 context.beginPath();
@@ -105,6 +109,8 @@ public class CPeriodicItem extends Widget implements PeriodicPaintable, Periodic
                     context.fillRect(position - 3, yPosition, 6, stepSize);
                     context.strokeRect(position - 3, yPosition, 6, stepSize);
                     context.restore();
+                } else {
+                    context.strokeRect(position - 1, yPosition, 2, stepSize);
                 }
                 context.closePath();
                 context.restore();
