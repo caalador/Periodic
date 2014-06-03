@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.ComponentConnector;
 import com.vaadin.client.ConnectorHierarchyChangeEvent;
+import com.vaadin.client.annotations.OnStateChange;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractHasComponentsConnector;
 import com.vaadin.client.ui.SimpleManagedLayout;
@@ -40,15 +41,23 @@ public class PeriodicConnector extends AbstractHasComponentsConnector implements
     @Override
     public void onStateChanged(final StateChangeEvent stateChangeEvent) {
         super.onStateChanged(stateChangeEvent);
-        if (stateChangeEvent.hasPropertyChanged("width") || stateChangeEvent.hasPropertyChanged("height")) {
-            getWidget().setSize(getState().widthPx, getState().heightPx);
-        }
-        if(stateChangeEvent.hasPropertyChanged("immediate")){
+
+        if (stateChangeEvent.hasPropertyChanged("immediate")) {
             getWidget().setImmediate(getState().immediate);
         }
-        if(stateChangeEvent.hasPropertyChanged("scale")){
+        if (stateChangeEvent.hasPropertyChanged("scale")) {
             getWidget().setScale(getState().scale);
         }
+    }
+
+    @OnStateChange({"widthPx", "heightPx"})
+    void setSize() {
+        getWidget().setSize(getState().widthPx, getState().heightPx);
+    }
+
+    @OnStateChange("animate")
+    void setAnimation() {
+        getWidget().animate(getState().animate);
     }
 
     @Override

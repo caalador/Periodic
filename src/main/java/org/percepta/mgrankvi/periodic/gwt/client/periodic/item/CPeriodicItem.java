@@ -21,6 +21,7 @@ public class CPeriodicItem extends Widget implements PeriodicPaintable, Periodic
 
     private boolean animate = false;
     private int animationTime = 3000;
+    private boolean animating = false;
 
     private PeriodicalItem previous = null;
     private PeriodicalItem next = null;
@@ -63,7 +64,7 @@ public class CPeriodicItem extends Widget implements PeriodicPaintable, Periodic
 
     @Override
     public void paint(Context2d context) {
-        if (label == null) {
+        if (label == null || animating) {
             return;
         }
         context.save();
@@ -156,9 +157,11 @@ public class CPeriodicItem extends Widget implements PeriodicPaintable, Periodic
             protected void onComplete() {
                 super.onComplete();
                 animate = false;
+                animating = false;
             }
         };
         animator.run(animationTime);
+        animating = true;
     }
 
     @Override

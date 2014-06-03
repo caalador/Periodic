@@ -45,6 +45,15 @@ public class Periodic extends AbstractComponentContainer implements HasComponent
     }
 
     /**
+     * Animate on first draw in given time.
+     *
+     * @param time Animation time in ms
+     */
+    public void setAnimate(int time) {
+        getState().animate = time;
+    }
+
+    /**
      * If immediate tooltip will follow mouse if something to show.
      *
      * @param immediateTooltip

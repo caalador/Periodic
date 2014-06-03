@@ -18,6 +18,8 @@ public class CSplit extends Widget implements PeriodicPaintable, PeriodicMovable
     private boolean animate = false;
     private int animationTime = 3000;
 
+    private boolean animating = false;
+
     public CSplit() {
         // dummy element
         setElement(Document.get().createDivElement());
@@ -43,7 +45,7 @@ public class CSplit extends Widget implements PeriodicPaintable, PeriodicMovable
 
     @Override
     public void paint(Context2d context) {
-        if (label == null) {
+        if (label == null || animating) {
             return;
         }
 
@@ -88,6 +90,7 @@ public class CSplit extends Widget implements PeriodicPaintable, PeriodicMovable
             protected void onComplete() {
                 super.onComplete();
                 animate = false;
+                animating = false;
             }
         };
         animator.run(animationTime);
