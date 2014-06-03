@@ -1,15 +1,18 @@
 package org.percepta.mgrankvi.periodic.gwt.client.periodic;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.ComponentConnector;
 import com.vaadin.client.ConnectorHierarchyChangeEvent;
+import com.vaadin.client.LayoutManager;
 import com.vaadin.client.annotations.OnStateChange;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractHasComponentsConnector;
 import com.vaadin.client.ui.SimpleManagedLayout;
 import com.vaadin.shared.ui.Connect;
 import org.percepta.mgrankvi.periodic.Periodic;
+import org.percepta.mgrankvi.periodic.gwt.client.PeriodicPaintable;
 
 import java.util.List;
 
@@ -81,5 +84,23 @@ public class PeriodicConnector extends AbstractHasComponentsConnector implements
     public void layout() {
         getWidget().clearCanvas();
         getWidget().paint();
+
+        LayoutManager layoutManager = getLayoutManager();
+        int heightPx = getState().heightPx;
+
+        for (ComponentConnector child : getChildComponents()) {
+            Widget childWidget = child.getWidget();
+            if (childWidget instanceof PeriodicPaintable) {
+                continue;
+            }
+
+            int elementPixelHeight = layoutManager.getOuterHeight(childWidget.getElement());
+            if (elementPixelHeight != -1) {
+                heightPx += elementPixelHeight;
+            }
+        }
+
+        getWidget().getElement().getStyle().setHeight(heightPx, Style.Unit.PX);
+        getLayoutManager().setNeedsMeasure(this);
     }
 }

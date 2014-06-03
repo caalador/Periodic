@@ -23,7 +23,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     protected final Canvas canvas;
     protected final Canvas tooltipCanvas;
 
-    private final FlowPanel content;
+    private final VerticalPanel content;
     private AbsolutePanel panel = null;
 
     private int width = 400;
@@ -45,7 +45,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     private Timer hold = null;
 
     public CPeriodic() {
-        content = new FlowPanel();
+        content = new VerticalPanel();
         content.setSize(width + "px", height + "px");
 
         SimplePanel baseContent = new SimplePanel();
