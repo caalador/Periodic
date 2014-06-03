@@ -39,15 +39,4 @@ public class Median extends Estimate {
 
     boolean next = true;
 
-    @Override
-    public void fullyAddedPeriod() {
-        if (next) {
-            empty += 5;
-            next = false;
-        } else {
-            empty -= 5;
-            next = true;
-        }
-
-    }
 }
