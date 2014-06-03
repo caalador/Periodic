@@ -5,11 +5,9 @@ import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.*;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import com.vaadin.client.VConsole;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicMovable;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicPaintable;
@@ -26,7 +24,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     protected final Canvas tooltipCanvas;
 
     private final FlowPanel content;
-    private final SimplePanel baseContent;
+    private AbsolutePanel panel = null;
 
     private int width = 400;
     private int height = 300;
@@ -41,22 +39,20 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
 
     private final PeriodicScaleAxis scaleAxis = new PeriodicScaleAxis(scale, width, height);
     private final List<PeriodicPaintable> paintable = new LinkedList<PeriodicPaintable>();
+
     private PeriodicalItem lastPeriodical = null;
 
     private Timer hold = null;
-
-    private int origin = 0;
 
     public CPeriodic() {
         content = new FlowPanel();
         content.setSize(width + "px", height + "px");
 
-        baseContent = new SimplePanel();
+        SimplePanel baseContent = new SimplePanel();
         baseContent.add(content);
 
         initWidget(baseContent);
 
-        setSize(width + "px", height + "px");
         setStyleName(CLASSNAME);
 
         addDomHandler(this, MouseDownEvent.getType());
@@ -66,12 +62,11 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
         canvas = Canvas.createIfSupported();
         tooltipCanvas = Canvas.createIfSupported();
         if (canvas != null) {
-            content.add(canvas);
-            content.add(tooltipCanvas);
-            tooltipCanvas.getCanvasElement().getStyle().setPosition(Style.Position.RELATIVE);
-            tooltipCanvas.getCanvasElement().getStyle().setTop(0, Style.Unit.PX);
-            //tooltipCanvas.getCanvasElement().getStyle().setLeft(-width, Style.Unit.PX);
-            tooltipCanvas.getCanvasElement().getStyle().setTop(-height, Style.Unit.PX);
+            panel = new AbsolutePanel();
+            panel.add(canvas, 0, 0);
+            panel.add(tooltipCanvas, 0, 0);
+            content.add(panel);
+
             if (animate) {
                 scaleAxis.animate(3000);
             }
@@ -83,14 +78,15 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     }
 
     protected void setSize(int width, int height) {
-
         this.width = width;
         this.height = height;
+
         scaleAxis.setWidth(width);
         scaleAxis.setHeight(height);
-        //tooltipCanvas.getCanvasElement().getStyle().setLeft(-width, Style.Unit.PX);
-        tooltipCanvas.getCanvasElement().getStyle().setTop(-height-3, Style.Unit.PX);
-        baseContent.setSize(width + "px", height + "px");
+
+        if(panel != null){
+            panel.setSize(width + "px", height + "px");
+        }
         content.setSize(width + "px", height + "px");
 
         clearCanvas();
@@ -104,7 +100,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
         for (PeriodicPaintable item : paintable) {
             item.setStepSize(scaleAxis.perStep);
         }
-        //paint();
+        paint();
     }
 
     protected void setImmediate(boolean immediate) {
@@ -188,7 +184,6 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
                     ((PeriodicMovable) item).move(event.getClientX() - down);
                 }
             }
-            origin += event.getClientX() - down;
             down = event.getClientX();
             clearCanvas();
             paint();
