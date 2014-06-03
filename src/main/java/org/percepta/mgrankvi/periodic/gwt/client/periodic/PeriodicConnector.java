@@ -41,7 +41,6 @@ public class PeriodicConnector extends AbstractHasComponentsConnector implements
     @Override
     public void onStateChanged(final StateChangeEvent stateChangeEvent) {
         super.onStateChanged(stateChangeEvent);
-
         if (stateChangeEvent.hasPropertyChanged("immediate")) {
             getWidget().setImmediate(getState().immediate);
         }

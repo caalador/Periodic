@@ -6,9 +6,9 @@ import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.VConsole;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicMovable;
@@ -26,6 +26,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     protected final Canvas tooltipCanvas;
 
     private final FlowPanel content;
+    private final SimplePanel baseContent;
 
     private int width = 400;
     private int height = 300;
@@ -50,8 +51,12 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
         content = new FlowPanel();
         content.setSize(width + "px", height + "px");
 
-        initWidget(content);
+        baseContent = new SimplePanel();
+        baseContent.add(content);
 
+        initWidget(baseContent);
+
+        setSize(width + "px", height + "px");
         setStyleName(CLASSNAME);
 
         addDomHandler(this, MouseDownEvent.getType());
@@ -65,7 +70,8 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
             content.add(tooltipCanvas);
             tooltipCanvas.getCanvasElement().getStyle().setPosition(Style.Position.RELATIVE);
             tooltipCanvas.getCanvasElement().getStyle().setTop(0, Style.Unit.PX);
-            tooltipCanvas.getCanvasElement().getStyle().setLeft(-width, Style.Unit.PX);
+            //tooltipCanvas.getCanvasElement().getStyle().setLeft(-width, Style.Unit.PX);
+            tooltipCanvas.getCanvasElement().getStyle().setTop(-height, Style.Unit.PX);
             if (animate) {
                 scaleAxis.animate(3000);
             }
@@ -77,11 +83,16 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     }
 
     protected void setSize(int width, int height) {
+
         this.width = width;
         this.height = height;
         scaleAxis.setWidth(width);
         scaleAxis.setHeight(height);
-        tooltipCanvas.getCanvasElement().getStyle().setLeft(-width, Style.Unit.PX);
+        //tooltipCanvas.getCanvasElement().getStyle().setLeft(-width, Style.Unit.PX);
+        tooltipCanvas.getCanvasElement().getStyle().setTop(-height-3, Style.Unit.PX);
+        baseContent.setSize(width + "px", height + "px");
+        content.setSize(width + "px", height + "px");
+
         clearCanvas();
     }
 
@@ -90,7 +101,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
         scaleAxis.setScale(scale);
         clearCanvas();
 
-        for(PeriodicPaintable item : paintable){
+        for (PeriodicPaintable item : paintable) {
             item.setStepSize(scaleAxis.perStep);
         }
         //paint();
@@ -111,10 +122,11 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
     protected void animate(int time) {
         this.animate = true;
         animationTime = time;
-        for(PeriodicPaintable item : paintable){
-           item.animate(time);
+        for (PeriodicPaintable item : paintable) {
+            item.animate(time);
         }
         scaleAxis.animate(time);
+        this.animate = false;
     }
 
     protected void paint() {
@@ -137,8 +149,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
             item.setStepSize(scaleAxis.perStep);
             paintable.add(item);
             item.setPosition(scaleAxis.verticalScaleWidth + (paintable.size() * 20));
-            VConsole.log("Item position: " + item.getPosition());
-            VConsole.log("vertical: " + scaleAxis.verticalScaleWidth + " paintableSize: " + paintable.size());
+
             item.setLow(paintable.size() % 2 == 0);
             if (animate) {
                 item.animate(animationTime);
