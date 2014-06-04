@@ -151,8 +151,8 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
             }
             if (widget instanceof PeriodicalItem) {
                 if (lastPeriodical != null) {
-                    lastPeriodical.addNext((PeriodicalItem) widget);
-                    ((PeriodicalItem) widget).addPrevious(lastPeriodical);
+                    lastPeriodical.setNext((PeriodicalItem) widget);
+                    ((PeriodicalItem) widget).setPrevious(lastPeriodical);
                 }
                 lastPeriodical = (PeriodicalItem) widget;
             }

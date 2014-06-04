@@ -79,12 +79,6 @@ public class CPeriodicItem extends Widget implements PeriodicPaintable, Periodic
         if (animate) {
             animate(context);
         } else {
-          /*  context.save();
-            context.setStrokeStyle(CssColor.make("GRAY"));
-            context.beginPath();
-            context.strokeRect(position - 1, 0, 2, stepSize * data.length);
-            context.closePath();
-            context.restore();*/
 
             // Paint selected spots.
             for (int i = 0; i < data.length; i++) {
@@ -253,17 +247,17 @@ public class CPeriodicItem extends Widget implements PeriodicPaintable, Periodic
     }
 
     @Override
-    public void addPrevious(PeriodicalItem item) {
+    public void setPrevious(PeriodicalItem item) {
         previous = item;
     }
 
     @Override
-    public void addNext(PeriodicalItem item) {
+    public void setNext(PeriodicalItem item) {
         next = item;
     }
 
     @Override
-    public int max() {
+    public int fullLength() {
         return data.length;
     }
 }
