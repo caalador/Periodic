@@ -3,6 +3,7 @@ package org.percepta.mgrankvi.periodic;
 import java.util.Collections;
 
 /**
+ * Creates and estimate of future data based on mean of existing data
  * Created by Mikael on 27/03/14.
  */
 public class Mean extends Estimate {
@@ -19,23 +20,23 @@ public class Mean extends Estimate {
 
     private void emptyMean() {
         empty = 0;
-        for(int empt : empties){
+        for (int empt : empties) {
             empty += empt;
         }
 
         empty -= empties.getFirst();
         empty -= empties.getLast();
-        empty = empty / (empties.size()-2);
+        empty = empty / (empties.size() - 2);
     }
 
     private void actualMean() {
         actual = 0;
-        for(int act : actuals){
+        for (int act : actuals) {
             actual += act;
         }
         actual -= actuals.getFirst();
         actual -= actuals.getLast();
-        actual = actual / (actuals.size()-2);
+        actual = actual / (actuals.size() - 2);
     }
 
     @Override

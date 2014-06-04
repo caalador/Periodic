@@ -3,6 +3,7 @@ package org.percepta.mgrankvi.periodic;
 import java.util.Collections;
 
 /**
+ * Creates and estimate of future data based on mean of existing data
  * Created by Mikael on 27/03/14.
  */
 public class Median extends Estimate {
@@ -36,7 +37,5 @@ public class Median extends Estimate {
     public int getLengthOfNextPeriod() {
         return actual;
     }
-
-    boolean next = true;
 
 }

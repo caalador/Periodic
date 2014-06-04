@@ -36,10 +36,20 @@ public class Periodic extends AbstractComponentContainer implements HasComponent
         getState().scale = scale;
     }
 
+    /**
+     * Set height of the graph in px
+     *
+     * @param height
+     */
     public void setHeightPx(int height) {
         getState().heightPx = height;
     }
 
+    /**
+     * Set width of the graph in px
+     *
+     * @param width
+     */
     public void setWidthPx(int width) {
         getState().widthPx = width;
     }
@@ -139,12 +149,12 @@ public class Periodic extends AbstractComponentContainer implements HasComponent
      */
     public void estimateOccurrences(Class estimateClass) {
         List<DataType[]> data = Lists.newLinkedList();
-        LinkedList<PeriodicItem> periodicItems = Lists.newLinkedList();
+        LinkedList<Periodical> periodicItems = Lists.newLinkedList();
 
         // Collect all periodic items without data
         for (Component c : children) {
-            if (c instanceof PeriodicItem) {
-                final PeriodicItem periodicItem = (PeriodicItem) c;
+            if (c instanceof Periodical) {
+                final Periodical periodicItem = (Periodical) c;
                 if (periodicItem.getData().isEmpty()) {
                     periodicItems.add(periodicItem);
                 } else {
@@ -161,11 +171,11 @@ public class Periodic extends AbstractComponentContainer implements HasComponent
         if (children.indexOf(periodicItems.getFirst()) > 0) {
             int index = children.indexOf(periodicItems.getFirst());
             Component c = children.get(--index);
-            while (!(c instanceof PeriodicItem) && index >= 0) {
+            while (!(c instanceof Periodical) && index >= 0) {
                 c = children.get(--index);
             }
-            if (c instanceof PeriodicItem) {
-                periodicItems.addFirst((PeriodicItem) c);
+            if (c instanceof Periodical) {
+                periodicItems.addFirst((Periodical) c);
             }
         }
 
@@ -181,7 +191,7 @@ public class Periodic extends AbstractComponentContainer implements HasComponent
         estimateData.periodSlots = estimate.getLengthOfNextPeriod();
         estimateData.lastPeriod = new Period(Lists.newLinkedList(periodicItems.getFirst().getData()).getLast());
 
-        for (PeriodicItem item : periodicItems) {
+        for (Periodical item : periodicItems) {
             estimateData.item = item;
 
             fillPeriodicItem(estimateData);
@@ -278,7 +288,7 @@ public class Periodic extends AbstractComponentContainer implements HasComponent
     }
 
     private class EstimateData {
-        PeriodicItem item;
+        Periodical item;
         Integer emptySlots;
         Integer periodSlots;
         Period lastPeriod;

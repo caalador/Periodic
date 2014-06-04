@@ -1,8 +1,9 @@
 package org.percepta.mgrankvi.periodic.gwt.client.periodic.item;
 
 
-import java.util.List;
 import com.vaadin.shared.AbstractComponentState;
+
+import java.util.List;
 
 public class PeriodicItemState extends AbstractComponentState {
 

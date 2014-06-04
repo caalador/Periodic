@@ -3,12 +3,9 @@ package org.percepta.mgrankvi.periodic.gwt.client.periodic;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.*;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.*;
-import com.vaadin.client.VConsole;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicMovable;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicPaintable;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicalItem;
@@ -86,7 +83,7 @@ public class CPeriodic extends Composite implements MouseDownHandler, MouseMoveH
         scaleAxis.setWidth(width);
         scaleAxis.setHeight(height);
 
-        if(panel != null){
+        if (panel != null) {
             panel.setSize(width + "px", height + "px");
         }
         content.setSize(width + "px", height + "px");

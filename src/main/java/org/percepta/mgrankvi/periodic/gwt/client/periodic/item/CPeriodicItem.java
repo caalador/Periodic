@@ -5,7 +5,6 @@ import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.Widget;
-import com.vaadin.client.VConsole;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicMovable;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicPaintable;
 import org.percepta.mgrankvi.periodic.gwt.client.PeriodicalItem;

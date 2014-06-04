@@ -73,7 +73,7 @@ public class CSplit extends Widget implements PeriodicPaintable, PeriodicMovable
             context.beginPath();
             context.strokeRect(position, 0, 1, yPosition);
             //context.strokeRect(position, yPosition + (label.length() * 11) + 6, 1, yPosition - 6);
-            context.strokeRect(position, nextYPosition-5, 1, height - nextYPosition);
+            context.strokeRect(position, nextYPosition - 5, 1, height - nextYPosition);
             context.closePath();
             context.restore();
         }

@@ -8,7 +8,7 @@ import org.percepta.mgrankvi.periodic.gwt.client.periodic.item.PeriodicItemState
 
 import java.util.List;
 
-public class PeriodicItem extends AbstractComponent {
+public class PeriodicItem extends AbstractComponent implements Periodical {
 
     private static final long serialVersionUID = -551357643545036296L;
 
@@ -47,7 +47,9 @@ public class PeriodicItem extends AbstractComponent {
         getState().periods.add(period);
     }
 
-    public String getLabel() { return getState().label; }
+    public String getLabel() {
+        return getState().label;
+    }
 
     @Override
     protected PeriodicItemState getState() {
