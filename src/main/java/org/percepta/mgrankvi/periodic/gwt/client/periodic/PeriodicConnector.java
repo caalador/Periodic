@@ -78,6 +78,9 @@ public class PeriodicConnector extends AbstractHasComponentsConnector implements
         for (final ComponentConnector child : connectorHierarchyChangeEvent.getOldChildren()) {
             child.getWidget().removeFromParent();
         }
+        widget.getElement().getStyle().setHeight(getState().heightPx, Style.Unit.PX);
+        widget.clearCanvas();
+        widget.paint();
     }
 
     @Override
@@ -100,7 +103,11 @@ public class PeriodicConnector extends AbstractHasComponentsConnector implements
             }
         }
 
-        getWidget().getElement().getStyle().setHeight(heightPx, Style.Unit.PX);
+        if (!(getState().height == null || getState().height.isEmpty())) {
+            getWidget().getElement().getStyle().setProperty("height", getState().height);
+        } else {
+            getWidget().getElement().getStyle().setHeight(heightPx, Style.Unit.PX);
+        }
         getLayoutManager().setNeedsMeasure(this);
     }
 }
