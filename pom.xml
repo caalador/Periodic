@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.percepta</groupId>
 	<artifactId>periodic</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<version>1.0</version>
 	<name>Vaadin Web Application</name>
 
@@ -135,8 +135,8 @@
 					</hostedWebapp>
 					<noServer>true</noServer>
 					<!-- Remove draftCompile when project is ready -->
-<!-- 					<draftCompile>false</draftCompile> -->
-					<draftCompile>true</draftCompile>
+ 					<draftCompile>false</draftCompile>
+					<!--<draftCompile>true</draftCompile>-->
 					<compileReport>true</compileReport>
 <!-- 					<style>OBF</style> -->
 					<style>PRETTY</style>
